@@ -1,17 +1,6 @@
-/*
-  ==============================================================================
-
-    This file was auto-generated!
-
-    It contains the basic framework code for a JUCE plugin processor.
-
-  ==============================================================================
-*/
-
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
 
-//==============================================================================
 PolypupAudioProcessor::PolypupAudioProcessor()
 #ifndef JucePlugin_PreferredChannelConfigurations
      : AudioProcessor (BusesProperties()
@@ -30,7 +19,6 @@ PolypupAudioProcessor::~PolypupAudioProcessor()
 {
 }
 
-//==============================================================================
 const String PolypupAudioProcessor::getName() const
 {
     return JucePlugin_Name;
@@ -95,14 +83,12 @@ void PolypupAudioProcessor::changeProgramName (int index, const String& newName)
 //==============================================================================
 void PolypupAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
-    // Use this method as the place to do any pre-playback
-    // initialisation that you need..
+    keyboardState.reset();
 }
 
 void PolypupAudioProcessor::releaseResources()
 {
-    // When playback stops, you can use this as an opportunity to free up any
-    // spare memory, etc.
+    keyboardState.reset();
 }
 
 #ifndef JucePlugin_PreferredChannelConfigurations
@@ -134,6 +120,7 @@ void PolypupAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
     ScopedNoDenormals noDenormals;
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
+    auto numSamples = buffer.getNumSamples();
 
     // In case we have more outputs than inputs, this code clears any output
     // channels that didn't contain input data, (because these aren't
@@ -143,6 +130,9 @@ void PolypupAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer
     // this code if your algorithm always overwrites all the output channels.
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
+    
+    
+    keyboardState.processNextMidiBuffer (midiMessages, 0, numSamples, true);
 
     // This is the place where you'd normally do the guts of your plugin's
     // audio processing...

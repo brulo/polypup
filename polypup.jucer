@@ -3,6 +3,37 @@
 <JUCERPROJECT id="THZ4ip" name="polypup" projectType="audioplug" jucerVersion="5.3.2">
   <MAINGROUP id="VKyt7y" name="polypup">
     <GROUP id="{9C2111F4-CEA0-3A33-7BE7-DCC92E1A0D24}" name="Source">
+      <GROUP id="{5A313A12-7C4B-257C-69DD-18BFC5E984B6}" name="Maximilian">
+        <GROUP id="{28C8182C-73E5-33D4-6679-B8C8EDC267D4}" name="libs">
+          <FILE id="hF6eRo" name="fft.cpp" compile="1" resource="0" file="Source/Maximilian/libs/fft.cpp"/>
+          <FILE id="KT19Ah" name="fft.h" compile="0" resource="0" file="Source/Maximilian/libs/fft.h"/>
+          <FILE id="aYq01E" name="maxiAtoms.cpp" compile="1" resource="0" file="Source/Maximilian/libs/maxiAtoms.cpp"/>
+          <FILE id="t5DwRq" name="maxiAtoms.h" compile="0" resource="0" file="Source/Maximilian/libs/maxiAtoms.h"/>
+          <FILE id="IzUK5M" name="maxiBark.cpp" compile="1" resource="0" file="Source/Maximilian/libs/maxiBark.cpp"/>
+          <FILE id="Meb92c" name="maxiBark.h" compile="0" resource="0" file="Source/Maximilian/libs/maxiBark.h"/>
+          <FILE id="GQlWse" name="maxiFFT.cpp" compile="1" resource="0" file="Source/Maximilian/libs/maxiFFT.cpp"/>
+          <FILE id="NmYVaQ" name="maxiFFT.h" compile="0" resource="0" file="Source/Maximilian/libs/maxiFFT.h"/>
+          <FILE id="h8k2ZA" name="maxiGrains.cpp" compile="1" resource="0" file="Source/Maximilian/libs/maxiGrains.cpp"/>
+          <FILE id="dUHj49" name="maxiGrains.h" compile="0" resource="0" file="Source/Maximilian/libs/maxiGrains.h"/>
+          <FILE id="llzkoO" name="maxim.h" compile="0" resource="0" file="Source/Maximilian/libs/maxim.h"/>
+          <FILE id="Vpqump" name="maxiMFCC.cpp" compile="1" resource="0" file="Source/Maximilian/libs/maxiMFCC.cpp"/>
+          <FILE id="AXDtwh" name="maxiMFCC.h" compile="0" resource="0" file="Source/Maximilian/libs/maxiMFCC.h"/>
+          <FILE id="ChMqSV" name="sineTable.h" compile="0" resource="0" file="Source/Maximilian/libs/sineTable.h"/>
+        </GROUP>
+        <FILE id="gPp1U8" name="main.cpp" compile="1" resource="0" file="Source/Maximilian/main.cpp"/>
+        <FILE id="HUUfxm" name="maximilian.cpp" compile="1" resource="0" file="Source/Maximilian/maximilian.cpp"/>
+        <FILE id="Kl2TMJ" name="maximilian.h" compile="0" resource="0" file="Source/Maximilian/maximilian.h"/>
+        <FILE id="xDFAIP" name="stb_vorbis.c" compile="1" resource="0" file="Source/Maximilian/stb_vorbis.c"/>
+        <FILE id="c90qVg" name="stb_vorbis.h" compile="0" resource="0" file="Source/Maximilian/stb_vorbis.h"/>
+      </GROUP>
+      <FILE id="Pu8tvR" name="ADSRComponent.cpp" compile="1" resource="0"
+            file="Source/ADSRComponent.cpp"/>
+      <FILE id="mq3hjq" name="ADSRComponent.h" compile="0" resource="0" file="Source/ADSRComponent.h"/>
+      <FILE id="VRovr2" name="FilterComponent.cpp" compile="1" resource="0"
+            file="Source/FilterComponent.cpp"/>
+      <FILE id="VSjLPw" name="FilterComponent.h" compile="0" resource="0"
+            file="Source/FilterComponent.h"/>
+      <FILE id="sSXeIa" name="JuceMaxiOsc.h" compile="0" resource="0" file="Source/JuceMaxiOsc.h"/>
       <FILE id="ro5D9o" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="NepeeJ" name="PluginProcessor.h" compile="0" resource="0"
