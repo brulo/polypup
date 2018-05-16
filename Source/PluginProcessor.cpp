@@ -18,7 +18,7 @@ PolypupAudioProcessor::PolypupAudioProcessor()
     
     // Add some voices...
     for (auto i = 0; i < numVoices; ++i)
-        synth.addVoice (new JuceMaxiOscVoice(JuceMaxiOscType::Saw, &attack, &decay, &sustain, &release, &holdTime, &filterCutoff, &filterEnvAmount));
+        synth.addVoice (new JuceMaxiOscVoice(JuceMaxiOscType::Saw, &attack, &decay, &sustain, &release, &holdTime, &filterCutoff, &filterQ, &filterEnvAmount));
     
     // ..and give the synth a sound to play
     synth.addSound (new JuceMaxiOscSound());

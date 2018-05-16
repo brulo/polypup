@@ -3,7 +3,7 @@
 
 //==============================================================================
 PolypupAudioProcessorEditor::PolypupAudioProcessorEditor (PolypupAudioProcessor& p)
-: AudioProcessorEditor (&p), processor (p), keyboardComponent(processor.keyboardState, MidiKeyboardComponent::Orientation::horizontalKeyboard),  filterComponent(&processor.filterCutoff, &processor.filterEnvAmount), adsrComponent(&processor.attack, &processor.decay, &processor.sustain, &processor.release, &processor.holdTime)
+: AudioProcessorEditor (&p), processor (p), keyboardComponent(processor.keyboardState, MidiKeyboardComponent::Orientation::horizontalKeyboard),  filterComponent(&processor.filterCutoff, &processor.filterQ, &processor.filterEnvAmount), adsrComponent(&processor.attack, &processor.decay, &processor.sustain, &processor.release, &processor.holdTime)
 {
     setSize (400, 300);
     addAndMakeVisible(keyboardComponent);

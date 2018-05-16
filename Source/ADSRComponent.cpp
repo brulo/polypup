@@ -16,7 +16,6 @@ ADSRComponent::ADSRComponent(double *attack, double *decay, double *sustain, dou
     // attack slider
     addAndMakeVisible(m_attackSlider);
     m_attackSlider.setRange(0.0, 1000.0);
-    m_attackSlider.setValue(1.0);
     m_attackSlider.setTextValueSuffix(" Ms");
     m_attackSlider.setNumDecimalPlacesToDisplay(0);
     m_attackSlider.setName("A");
@@ -25,6 +24,7 @@ ADSRComponent::ADSRComponent(double *attack, double *decay, double *sustain, dou
                                    true, textBoxWidth, textBoxHeight);
     m_attackSlider.onValueChange = [this,attack] () mutable
     { *attack = 1-pow( 0.01, 1.0 / ( m_attackSlider.getValue() * maxiSettings::sampleRate * 0.001 ) ); };
+    m_attackSlider.setValue(1.0);
     
     // decay label
     addAndMakeVisible(m_decayLabel);
@@ -34,7 +34,6 @@ ADSRComponent::ADSRComponent(double *attack, double *decay, double *sustain, dou
     // decay slider
     addAndMakeVisible(m_decaySlider);
     m_decaySlider.setRange(1.0, 1000.0);
-    m_attackSlider.setValue(1.0);
     m_decaySlider.setTextValueSuffix(" Ms");
     m_decaySlider.setNumDecimalPlacesToDisplay(0);
     m_decaySlider.setName("D");
@@ -43,6 +42,7 @@ ADSRComponent::ADSRComponent(double *attack, double *decay, double *sustain, dou
                                   true, textBoxWidth, textBoxHeight);
     m_decaySlider.onValueChange = [this,decay] () mutable
     { *decay = pow( 0.01, 1.0/(m_decaySlider.getValue() * maxiSettings::sampleRate * 0.001) ); };
+    m_decaySlider.setValue(300.0);
     
     // sustain label
     addAndMakeVisible(m_sustainLabel);
@@ -52,7 +52,6 @@ ADSRComponent::ADSRComponent(double *attack, double *decay, double *sustain, dou
     // sustain slider
     addAndMakeVisible(m_sustainSlider);
     m_sustainSlider.setRange(0.1, 0.75);
-    m_attackSlider.setValue(0.5);
     m_sustainSlider.setTextValueSuffix(" Ms");
     m_sustainSlider.setNumDecimalPlacesToDisplay(0);
     m_sustainSlider.setName("S");
@@ -61,6 +60,7 @@ ADSRComponent::ADSRComponent(double *attack, double *decay, double *sustain, dou
     m_sustainSlider.setTextBoxStyle(showValueText ? Slider::TextBoxBelow : Slider::NoTextBox,
                                     true, textBoxWidth, textBoxHeight);
     m_sustainSlider.onValueChange = [this,sustain] () mutable { *sustain = m_sustainSlider.getValue(); };
+    m_sustainSlider.setValue(0.5);
     
     // release label
     addAndMakeVisible(m_releaseLabel);
@@ -70,7 +70,6 @@ ADSRComponent::ADSRComponent(double *attack, double *decay, double *sustain, dou
     // release slider
     addAndMakeVisible(m_releaseSlider);
     m_releaseSlider.setRange(0.1, 1000.0);
-    m_releaseSlider.setValue(200.0);
     m_releaseSlider.setTextValueSuffix(" Ms");
     m_releaseSlider.setNumDecimalPlacesToDisplay(0);
     m_releaseSlider.setName("R");
@@ -79,6 +78,7 @@ ADSRComponent::ADSRComponent(double *attack, double *decay, double *sustain, dou
                                     true, textBoxWidth, textBoxHeight);
     m_releaseSlider.onValueChange = [this,release] () mutable
     { *release = pow( 0.01, 1.0/(m_releaseSlider.getValue() * maxiSettings::sampleRate * 0.001) ); };
+    m_releaseSlider.setValue(200.0);
 }
 
 void ADSRComponent::resized()

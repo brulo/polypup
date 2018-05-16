@@ -1,11 +1,11 @@
 #include "FilterComponent.h"
 
-FilterComponent::FilterComponent(double *cutoff, double *envAmountCutoff)
+FilterComponent::FilterComponent(double *cutoff, double *q, double *envAmountCutoff)
 {
     const Slider::SliderStyle sliderStyle = Slider::SliderStyle::LinearVertical;
     const int textBoxWidth = 50;
     const int textBoxHeight = 20;
-    const bool showValueText = false;
+    const bool showValueText = true;
     
     // cutoff label
     addAndMakeVisible(m_cutoffLabel);
@@ -23,6 +23,22 @@ FilterComponent::FilterComponent(double *cutoff, double *envAmountCutoff)
                                    true, textBoxWidth, textBoxHeight);
     m_cutoffSlider.onValueChange = [this,cutoff] () mutable { *cutoff = m_cutoffSlider.getValue(); };
     m_cutoffSlider.setValue(1000.0);
+    
+    // q label
+    addAndMakeVisible(m_qLabel);
+    m_qLabel.setText("Q", NotificationType::dontSendNotification);
+    m_qLabel.setJustificationType(Justification::centred);
+    
+    // q slider
+    addAndMakeVisible(m_qSlider);
+    m_qSlider.setRange(1.0, 10.0);
+    m_qSlider.setNumDecimalPlacesToDisplay(2);
+    m_qSlider.setName("Q");
+    m_qSlider.setSliderStyle(sliderStyle);
+    m_qSlider.setTextBoxStyle(showValueText ? Slider::TextBoxBelow : Slider::NoTextBox,
+                                   true, textBoxWidth, textBoxHeight);
+    m_qSlider.onValueChange = [this,q] () mutable { *q = m_qSlider.getValue(); };
+    m_qSlider.setValue(1.0);
     
     // env amount label
     addAndMakeVisible(m_envAmountLabel);
@@ -47,10 +63,15 @@ void FilterComponent::resized()
     auto boundsRect = getLocalBounds();
     const int labelHeight = 20;
     
-    auto cutoffSlice = boundsRect.removeFromRight(getWidth() * 0.5);
-    m_cutoffLabel.setBounds(cutoffSlice.removeFromTop(labelHeight));
-    m_cutoffSlider.setBounds(cutoffSlice);
+    auto slice = boundsRect.removeFromRight(getWidth() * 0.33333);
+    m_cutoffLabel.setBounds(slice.removeFromTop(labelHeight));
+    m_cutoffSlider.setBounds(slice);
     
-    m_envAmountLabel.setBounds(boundsRect.removeFromTop(labelHeight));
-    m_envAmountSlider.setBounds(boundsRect);
+    slice = boundsRect.removeFromRight(getWidth() * 0.33333);
+    m_qLabel.setBounds(slice.removeFromTop(labelHeight));
+    m_qSlider.setBounds(slice);
+    
+    slice = boundsRect.removeFromRight(getWidth() * 0.33333);
+    m_envAmountLabel.setBounds(slice.removeFromTop(labelHeight));
+    m_envAmountSlider.setBounds(slice);
 }

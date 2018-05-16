@@ -23,7 +23,7 @@ struct JuceMaxiOscSound : public SynthesiserSound
 struct JuceMaxiOscVoice : public SynthesiserVoice
 {
     JuceMaxiOscVoice(JuceMaxiOscType oscType, double *attack, double *decay, double *sustain, double *release, long *holdTime,
-                     double *filterCutoff, double *envAmountCutoff)
+                     double *filterCutoff, double *filterQ, double *envAmountCutoff)
     {
         m_oscType = oscType;
         m_attack = attack;
@@ -32,6 +32,7 @@ struct JuceMaxiOscVoice : public SynthesiserVoice
         m_release = release;
         m_holdTime = holdTime;
         m_filterCutoff = filterCutoff;
+        m_filterQ = filterQ;
         m_envAmountCutoff = envAmountCutoff;
 
         m_trigger = false;
@@ -86,7 +87,7 @@ struct JuceMaxiOscVoice : public SynthesiserVoice
             double cutoff = m_env.adsr(*m_envAmountCutoff, *m_attack, *m_decay, *m_sustain, *m_release, *m_holdTime, m_trigger, false);
             cutoff += *m_filterCutoff;
             cutoff = std::max(std::min(cutoff, 14000.0), 0.0);
-            currentSample = m_filt.lores(currentSample, cutoff, 10.0);
+            currentSample = m_filt.lores(currentSample, cutoff, *m_filterQ);
             
             // amp envelope
             currentSample = m_env.adsr(currentSample, *m_attack, *m_decay, *m_sustain, *m_release, *m_holdTime, m_trigger);
@@ -108,6 +109,7 @@ private:
     double *m_sustain;
     double *m_release;
     double *m_filterCutoff;
+    double *m_filterQ;
     double *m_envAmountCutoff;
     long* m_holdTime;
     maxiOsc m_osc;
