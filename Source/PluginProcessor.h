@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../JuceLibraryCode/JuceHeader.h"
+#include "JuceMaxiOsc.h"
 
 class PolypupAudioProcessor  : public AudioProcessor
 {
@@ -36,7 +37,15 @@ public:
     void getStateInformation (MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    Synthesiser synth;
     MidiKeyboardState keyboardState;
+    
+    // envelope params
+    double attack, decay, sustain, release;
+    long holdTime;
+    
+    // filter params
+    double filterCutoff, filterQ, filterEnvAmount;
     
 private:
     

@@ -3,10 +3,12 @@
 
 //==============================================================================
 PolypupAudioProcessorEditor::PolypupAudioProcessorEditor (PolypupAudioProcessor& p)
-: AudioProcessorEditor (&p), processor (p), keyboardComponent(processor.keyboardState, MidiKeyboardComponent::Orientation::horizontalKeyboard)
+: AudioProcessorEditor (&p), processor (p), keyboardComponent(processor.keyboardState, MidiKeyboardComponent::Orientation::horizontalKeyboard),  filterComponent(&processor.filterCutoff, &processor.filterEnvAmount), adsrComponent(&processor.attack, &processor.decay, &processor.sustain, &processor.release, &processor.holdTime)
 {
     setSize (400, 300);
     addAndMakeVisible(keyboardComponent);
+    addAndMakeVisible(filterComponent);
+    addAndMakeVisible(adsrComponent);
 }
 
 PolypupAudioProcessorEditor::~PolypupAudioProcessorEditor()
@@ -28,4 +30,9 @@ void PolypupAudioProcessorEditor::resized()
     auto boundsRect = getBounds();
     
     keyboardComponent.setBounds(boundsRect.removeFromTop(50));
+    
+    auto row = boundsRect.removeFromTop(150);
+    adsrComponent.setBounds(row.removeFromLeft(400));
+    filterComponent.setBounds(row.removeFromLeft(200));
+     
 }

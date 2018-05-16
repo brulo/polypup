@@ -2,6 +2,8 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
+#include "FilterComponent.h"
+#include "ADSRComponent.h"
 
 class PolypupAudioProcessorEditor  : public AudioProcessorEditor
 {
@@ -18,6 +20,8 @@ private:
     PolypupAudioProcessor& processor;
     
     MidiKeyboardComponent keyboardComponent;
+    FilterComponent filterComponent;
+    ADSRComponent adsrComponent;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (PolypupAudioProcessorEditor)
 };
