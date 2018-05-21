@@ -2,11 +2,18 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-PolypupAudioProcessorEditor::PolypupAudioProcessorEditor (PolypupAudioProcessor& p, AudioProcessorValueTreeState& vts)
-: AudioProcessorEditor (&p), processor (p), valueTreeState(vts), keyboardComponent(processor.keyboardState, MidiKeyboardComponent::Orientation::horizontalKeyboard), filterComponent(valueTreeState, &processor.filterCutoff, &processor.filterQ, &processor.filterEnvAmount, CUTOFF_ID, CUTOFF_ENVAMT_ID, Q_ID), adsrComponent(valueTreeState, &processor.attack, &processor.decay, &processor.sustain, &processor.release, &processor.holdTime, ATTACK_ID, DECAY_ID, SUSTAIN_ID, RELEASE_ID)
+PolypupAudioProcessorEditor::PolypupAudioProcessorEditor(PolypupAudioProcessor& p, AudioProcessorValueTreeState& vts) :
+    AudioProcessorEditor(&p),
+    processor(p),
+    valueTreeState(vts),
+    audioDeviceSelectorComponent(processor.audioDeviceManager, 0, 0, 1, 2, true, false, false, false),
+    keyboardComponent(processor.keyboardState, MidiKeyboardComponent::Orientation::horizontalKeyboard),
+    filterComponent(valueTreeState, &processor.filterCutoff, &processor.filterQ, &processor.filterEnvAmount, CUTOFF_ID, CUTOFF_ENVAMT_ID, Q_ID),
+    adsrComponent(valueTreeState, &processor.attack, &processor.decay, &processor.sustain, &processor.release, &processor.holdTime, ATTACK_ID, DECAY_ID, SUSTAIN_ID, RELEASE_ID)
 {
-    setSize (640, 480);
+    setSize(640, 480);
     keyboardComponent.setKeyWidth(75);
+    addAndMakeVisible(audioDeviceSelectorComponent);
     addAndMakeVisible(keyboardComponent);
     addAndMakeVisible(filterComponent);
     addAndMakeVisible(adsrComponent);
@@ -30,7 +37,12 @@ void PolypupAudioProcessorEditor::resized()
 {
     auto boundsRect = getBounds();
     
+    // audio device selector row
     auto row = boundsRect.removeFromTop(300);
+    audioDeviceSelectorComponent.setBounds(row);
+    
+    // adsr and filter in a row
+    row = boundsRect.removeFromTop(200);
     adsrComponent.setBounds(row.removeFromLeft(400));
     filterComponent.setBounds(row.removeFromLeft(200));
     

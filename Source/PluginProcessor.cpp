@@ -12,7 +12,8 @@ PolypupAudioProcessor::PolypupAudioProcessor()
                      #endif
                        )
 #endif
-, parameters(*this, nullptr)
+, parameters(*this, nullptr),
+audioDeviceManager()
 {
     // set up parameters
     // ADSR env

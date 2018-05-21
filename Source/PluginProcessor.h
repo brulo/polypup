@@ -35,7 +35,7 @@
 #define CUTOFF_ENVAMT_ID    "cutoff_envamt"
 #define CUTOFF_ENVAMT_NAME  "cutoff_envamt"
 #define CUTOFF_ENVAMT_LABEL ""
-#define CUTOFF_ENVAMT_RANGE NormalisableRange<float>(-500.0, 500.0)
+#define CUTOFF_ENVAMT_RANGE NormalisableRange<float>(-5000.0, 5000.0)
 #define CUTOFF_ENVAMT_DEFAULT_VALUE 0.0
 
 #define Q_ID    "q"
@@ -84,6 +84,7 @@ public:
     Synthesiser synth;
     MidiKeyboardState keyboardState;
     AudioProcessorValueTreeState parameters;
+    AudioDeviceManager audioDeviceManager;
     
     // envelope params
     double attack, decay, sustain, release;

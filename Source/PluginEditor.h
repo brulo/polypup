@@ -20,6 +20,7 @@ private:
     PolypupAudioProcessor& processor;
     AudioProcessorValueTreeState& valueTreeState;
     
+    AudioDeviceSelectorComponent audioDeviceSelectorComponent;
     MidiKeyboardComponent keyboardComponent;
     FilterComponent filterComponent;
     ADSRComponent adsrComponent;
