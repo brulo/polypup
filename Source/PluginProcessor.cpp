@@ -12,7 +12,22 @@ PolypupAudioProcessor::PolypupAudioProcessor()
                      #endif
                        )
 #endif
+, parameters(*this, nullptr)
 {
+    // set up parameters
+    // ADSR env
+    parameters.createAndAddParameter(ATTACK_ID, ATTACK_NAME, ATTACK_LABEL, ATTACK_RANGE, ATTACK_DEFAULT_VALUE, nullptr, nullptr);
+    parameters.createAndAddParameter(DECAY_ID, DECAY_NAME, DECAY_LABEL, DECAY_RANGE, DECAY_DEFAULT_VALUE, nullptr, nullptr);
+    parameters.createAndAddParameter(SUSTAIN_ID, SUSTAIN_NAME, SUSTAIN_LABEL, SUSTAIN_RANGE, SUSTAIN_DEFAULT_VALUE, nullptr, nullptr);
+    parameters.createAndAddParameter(RELEASE_ID, RELEASE_NAME, RELEASE_LABEL, RELEASE_RANGE, RELEASE_DEFAULT_VALUE, nullptr, nullptr);
+    
+    // filter
+    parameters.createAndAddParameter(CUTOFF_ENVAMT_ID, CUTOFF_ENVAMT_NAME, CUTOFF_ENVAMT_LABEL, CUTOFF_ENVAMT_RANGE, CUTOFF_ENVAMT_DEFAULT_VALUE, nullptr, nullptr);
+    parameters.createAndAddParameter(CUTOFF_ID, CUTOFF_NAME, CUTOFF_LABEL, CUTOFF_RANGE, CUTOFF_DEFAULT_VALUE, nullptr, nullptr);
+    parameters.createAndAddParameter(Q_ID, Q_NAME, Q_LABEL, Q_RANGE, Q_DEFAULT_VALUE, nullptr, nullptr);
+    
+    parameters.state = ValueTree(Identifier(SAVE_FILE_ID));
+    
     // set up the synth
     auto numVoices = 8;
     for(auto i = 0; i < numVoices; ++i)
@@ -91,7 +106,7 @@ void PolypupAudioProcessor::changeProgramName (int index, const String& newName)
 void PolypupAudioProcessor::prepareToPlay (double sampleRate, int samplesPerBlock)
 {
     keyboardState.reset();
-    synth.setCurrentPlaybackSampleRate (sampleRate);
+    synth.setCurrentPlaybackSampleRate(sampleRate);
 }
 
 void PolypupAudioProcessor::releaseResources()
@@ -144,7 +159,7 @@ bool PolypupAudioProcessor::hasEditor() const
 
 AudioProcessorEditor* PolypupAudioProcessor::createEditor()
 {
-    return new PolypupAudioProcessorEditor (*this);
+    return new PolypupAudioProcessorEditor (*this, parameters);
 }
 
 //==============================================================================
@@ -153,12 +168,35 @@ void PolypupAudioProcessor::getStateInformation (MemoryBlock& destData)
     // You should use this method to store your parameters in the memory block.
     // You could do that either as raw data, or use the XML or ValueTree classes
     // as intermediaries to make it easy to save and load complex data.
+    ScopedPointer<XmlElement> xml(parameters.state.createXml());
+    copyXmlToBinary(*xml, destData);
 }
 
 void PolypupAudioProcessor::setStateInformation (const void* data, int sizeInBytes)
 {
     // You should use this method to restore your parameters from this memory block,
     // whose contents will have been created by the getStateInformation() call.
+    
+    /*
+    ScopedPointer<XmlElement> xmlState(getXmlFromBinary(data, sizeInBytes));
+    
+    if(xml != nullptr)
+    {
+        if(xml->hasTagName(SAVE_FILE_ID))
+        {
+            parametersValueTree.state = ValueTree::fromXml(*xml);
+        }
+    }
+     */
+    
+    std::unique_ptr<XmlElement> xmlState (getXmlFromBinary (data, sizeInBytes));
+    if (xmlState.get() != nullptr)
+    {
+        if (xmlState->hasTagName (parameters.state.getType()))
+        {
+            parameters.replaceState (ValueTree::fromXml (*xmlState));
+        }
+    }
 }
 
 //==============================================================================

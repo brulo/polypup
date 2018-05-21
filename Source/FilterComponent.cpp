@@ -1,6 +1,6 @@
 #include "FilterComponent.h"
 
-FilterComponent::FilterComponent(double *cutoff, double *q, double *envAmountCutoff)
+FilterComponent::FilterComponent(AudioProcessorValueTreeState& valueTree, double *cutoff, double *q, double *envAmountCutoff, String cutoffId, String cutoffEnvAmtId, String qId)
 {
     const Slider::SliderStyle sliderStyle = Slider::SliderStyle::LinearVertical;
     const int textBoxWidth = 50;
@@ -14,15 +14,14 @@ FilterComponent::FilterComponent(double *cutoff, double *q, double *envAmountCut
     
     // cutoff slider
     addAndMakeVisible(m_cutoffSlider);
-    m_cutoffSlider.setRange(10.0, 14000.0);
+    m_cutoffSlider.onValueChange = [this,cutoff] () mutable { *cutoff = m_cutoffSlider.getValue(); };
+    m_cutoffAttachment.reset(new AudioProcessorValueTreeState::SliderAttachment(valueTree, cutoffId, m_cutoffSlider));
     //m_cutoffSlider.setTextValueSuffix("");
     m_cutoffSlider.setNumDecimalPlacesToDisplay(2);
     m_cutoffSlider.setName("Cutoff");
     m_cutoffSlider.setSliderStyle(sliderStyle);
     m_cutoffSlider.setTextBoxStyle(showValueText ? Slider::TextBoxBelow : Slider::NoTextBox,
                                    true, textBoxWidth, textBoxHeight);
-    m_cutoffSlider.onValueChange = [this,cutoff] () mutable { *cutoff = m_cutoffSlider.getValue(); };
-    m_cutoffSlider.setValue(1000.0);
     
     // q label
     addAndMakeVisible(m_qLabel);
@@ -31,31 +30,30 @@ FilterComponent::FilterComponent(double *cutoff, double *q, double *envAmountCut
     
     // q slider
     addAndMakeVisible(m_qSlider);
-    m_qSlider.setRange(1.0, 10.0);
+    m_qSlider.onValueChange = [this,q] () mutable { *q = m_qSlider.getValue(); };
+    m_qAttachment.reset(new AudioProcessorValueTreeState::SliderAttachment(valueTree, qId, m_qSlider));
     m_qSlider.setNumDecimalPlacesToDisplay(2);
     m_qSlider.setName("Q");
     m_qSlider.setSliderStyle(sliderStyle);
     m_qSlider.setTextBoxStyle(showValueText ? Slider::TextBoxBelow : Slider::NoTextBox,
                                    true, textBoxWidth, textBoxHeight);
-    m_qSlider.onValueChange = [this,q] () mutable { *q = m_qSlider.getValue(); };
-    m_qSlider.setValue(1.0);
     
     // env amount label
     addAndMakeVisible(m_envAmountLabel);
+    m_cutoffEnvAmountAttachment.reset(new AudioProcessorValueTreeState::SliderAttachment(valueTree, cutoffEnvAmtId, m_envAmountSlider));
     m_envAmountLabel.setText("Env Amt", NotificationType::dontSendNotification);
     m_envAmountLabel.setJustificationType(Justification::centred);
     
     // env amount slider
     addAndMakeVisible(m_envAmountSlider);
-    m_envAmountSlider.setRange(-10000.0, 10000.0);
-    //m_cutoffSlider.setTextValueSuffix("");
+    m_envAmountSlider.onValueChange = [this,envAmountCutoff] () mutable { *envAmountCutoff = m_envAmountSlider.getValue(); };
+    m_cutoffEnvAmountAttachment.reset(new AudioProcessorValueTreeState::SliderAttachment(valueTree, cutoffEnvAmtId, m_envAmountSlider));
+    //m_envAmountSlider.setTextValueSuffix("");
     m_envAmountSlider.setNumDecimalPlacesToDisplay(2);
-    m_envAmountSlider.setName("EnvAmt");
+    m_envAmountSlider.setName("Env Amt");
     m_envAmountSlider.setSliderStyle(sliderStyle);
     m_envAmountSlider.setTextBoxStyle(showValueText ? Slider::TextBoxBelow : Slider::NoTextBox,
                                    true, textBoxWidth, textBoxHeight);
-    m_envAmountSlider.onValueChange = [this,envAmountCutoff] () mutable { *envAmountCutoff = m_envAmountSlider.getValue(); };
-    m_envAmountSlider.setValue(0.0);
 }
 
 void FilterComponent::resized()

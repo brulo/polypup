@@ -2,10 +2,10 @@
 #include "PluginEditor.h"
 
 //==============================================================================
-PolypupAudioProcessorEditor::PolypupAudioProcessorEditor (PolypupAudioProcessor& p)
-: AudioProcessorEditor (&p), processor (p), keyboardComponent(processor.keyboardState, MidiKeyboardComponent::Orientation::horizontalKeyboard),  filterComponent(&processor.filterCutoff, &processor.filterQ, &processor.filterEnvAmount), adsrComponent(&processor.attack, &processor.decay, &processor.sustain, &processor.release, &processor.holdTime)
+PolypupAudioProcessorEditor::PolypupAudioProcessorEditor (PolypupAudioProcessor& p, AudioProcessorValueTreeState& vts)
+: AudioProcessorEditor (&p), processor (p), valueTreeState(vts), keyboardComponent(processor.keyboardState, MidiKeyboardComponent::Orientation::horizontalKeyboard), filterComponent(valueTreeState, &processor.filterCutoff, &processor.filterQ, &processor.filterEnvAmount, CUTOFF_ID, CUTOFF_ENVAMT_ID, Q_ID), adsrComponent(valueTreeState, &processor.attack, &processor.decay, &processor.sustain, &processor.release, &processor.holdTime, ATTACK_ID, DECAY_ID, SUSTAIN_ID, RELEASE_ID)
 {
-    setSize (400, 300);
+    setSize (640, 480);
     keyboardComponent.setKeyWidth(75);
     addAndMakeVisible(keyboardComponent);
     addAndMakeVisible(filterComponent);
