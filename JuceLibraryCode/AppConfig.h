@@ -298,10 +298,10 @@
  #define JucePlugin_Build_VST              1
 #endif
 #ifndef  JucePlugin_Build_VST3
- #define JucePlugin_Build_VST3             1
+ #define JucePlugin_Build_VST3             0
 #endif
 #ifndef  JucePlugin_Build_AU
- #define JucePlugin_Build_AU               0
+ #define JucePlugin_Build_AU               1
 #endif
 #ifndef  JucePlugin_Build_AUv3
  #define JucePlugin_Build_AUv3             0
@@ -325,7 +325,7 @@
  #define JucePlugin_Desc                   "polypup"
 #endif
 #ifndef  JucePlugin_Manufacturer
- #define JucePlugin_Manufacturer           "yourcompany"
+ #define JucePlugin_Manufacturer           "WALF"
 #endif
 #ifndef  JucePlugin_ManufacturerWebsite
  #define JucePlugin_ManufacturerWebsite    ""
@@ -334,10 +334,10 @@
  #define JucePlugin_ManufacturerEmail      ""
 #endif
 #ifndef  JucePlugin_ManufacturerCode
- #define JucePlugin_ManufacturerCode       0x4d616e75 // 'Manu'
+ #define JucePlugin_ManufacturerCode       0x77416c66 // 'wAlf'
 #endif
 #ifndef  JucePlugin_PluginCode
- #define JucePlugin_PluginCode             0x54687a34 // 'Thz4'
+ #define JucePlugin_PluginCode             0x57614c66 // 'WaLf'
 #endif
 #ifndef  JucePlugin_IsSynth
  #define JucePlugin_IsSynth                1
@@ -370,7 +370,7 @@
  #define JucePlugin_VSTCategory            kPlugCategSynth
 #endif
 #ifndef  JucePlugin_Vst3Category
- #define JucePlugin_Vst3Category           "Mono"
+ #define JucePlugin_Vst3Category           "Instrument"
 #endif
 #ifndef  JucePlugin_AUMainType
  #define JucePlugin_AUMainType             'aumu'
@@ -430,5 +430,5 @@
  #define JucePlugin_IAASubType             JucePlugin_PluginCode
 #endif
 #ifndef  JucePlugin_IAAName
- #define JucePlugin_IAAName                "yourcompany: polypup"
+ #define JucePlugin_IAAName                "WALF: polypup"
 #endif
