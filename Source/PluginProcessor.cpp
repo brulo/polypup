@@ -139,6 +139,43 @@ bool PolypupAudioProcessor::isBusesLayoutSupported (const BusesLayout& layouts) 
 }
 #endif
 
+void PolypupAudioProcessor::save()
+{
+    FileChooser chooser("save the file");
+    if (chooser.browseForFileToSave (true))
+    {
+        File file(chooser.getResult());
+        
+        if(file.existsAsFile()) file.moveToTrash();
+        
+        FileOutputStream stream (file);
+        ScopedPointer<XmlElement> xml = parameters.state.createXml();
+        xml->writeToStream (stream, String());
+    }
+}
+
+void PolypupAudioProcessor::load()
+{
+    FileChooser chooser ("Open preset data",
+                         File::nonexistent,
+                         "*.xml");
+    
+    if(chooser.browseForFileToOpen())
+    {
+        Logger* log = Logger::getCurrentLogger();
+        File file (chooser.getResult());
+        
+        XmlDocument xmlDoc(file);
+        ScopedPointer<XmlElement> xml = xmlDoc.getDocumentElement();
+        
+        if(xml == nullptr) {
+            log->writeToLog ("XML error");
+            return;
+        }
+        parameters.replaceState (ValueTree::fromXml (*xml));
+    }
+}
+
 void PolypupAudioProcessor::processBlock (AudioBuffer<float>& buffer, MidiBuffer& midiMessages)
 {
     ScopedNoDenormals noDenormals;

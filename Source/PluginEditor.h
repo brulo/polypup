@@ -2,8 +2,22 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 #include "PluginProcessor.h"
+#include "PresetManagerComponent.h"
 #include "FilterComponent.h"
 #include "ADSRComponent.h"
+
+/*
+ TODO:
+ 
+ - master gain slider
+ - change default font
+ - save/load presets
+ - save/load previous AudioDeviceManager state
+ - learn how to use LookAndFeel class
+ - make slider textboxes wider
+ - switch to responsive scaling design (instead of hardcoded pixel widths/heights)
+ 
+ */
 
 class PolypupAudioProcessorEditor  : public AudioProcessorEditor
 {
@@ -20,6 +34,7 @@ private:
     PolypupAudioProcessor& processor;
     AudioProcessorValueTreeState& valueTreeState;
     
+    PresetManagerComponent presetManagerComponent;
     AudioDeviceSelectorComponent audioDeviceSelectorComponent;
     MidiKeyboardComponent keyboardComponent;
     FilterComponent filterComponent;

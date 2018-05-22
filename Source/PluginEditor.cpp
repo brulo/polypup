@@ -6,13 +6,17 @@ PolypupAudioProcessorEditor::PolypupAudioProcessorEditor(PolypupAudioProcessor& 
     AudioProcessorEditor(&p),
     processor(p),
     valueTreeState(vts),
+    presetManagerComponent(&p),
     audioDeviceSelectorComponent(processor.audioDeviceManager, 0, 0, 1, 2, true, false, false, false),
     keyboardComponent(processor.keyboardState, MidiKeyboardComponent::Orientation::horizontalKeyboard),
     filterComponent(valueTreeState, &processor.filterCutoff, &processor.filterQ, &processor.filterEnvAmount, CUTOFF_ID, CUTOFF_ENVAMT_ID, Q_ID),
     adsrComponent(valueTreeState, &processor.attack, &processor.decay, &processor.sustain, &processor.release, &processor.holdTime, ATTACK_ID, DECAY_ID, SUSTAIN_ID, RELEASE_ID)
 {
-    setSize(640, 480);
+    setSize(1024, 768);
+    
     keyboardComponent.setKeyWidth(75);
+
+    addAndMakeVisible(presetManagerComponent);
     addAndMakeVisible(audioDeviceSelectorComponent);
     addAndMakeVisible(keyboardComponent);
     addAndMakeVisible(filterComponent);
@@ -37,12 +41,15 @@ void PolypupAudioProcessorEditor::resized()
 {
     auto boundsRect = getBounds();
     
+    auto row = boundsRect.removeFromTop(25);
+    presetManagerComponent.setBounds(row);
+
     // audio device selector row
-    auto row = boundsRect.removeFromTop(300);
-    audioDeviceSelectorComponent.setBounds(row);
+    //row = boundsRect.removeFromTop(300);
+    //audioDeviceSelectorComponent.setBounds(row);
     
     // adsr and filter in a row
-    row = boundsRect.removeFromTop(200);
+    row = boundsRect.removeFromTop(300);
     adsrComponent.setBounds(row.removeFromLeft(400));
     filterComponent.setBounds(row.removeFromLeft(200));
     
