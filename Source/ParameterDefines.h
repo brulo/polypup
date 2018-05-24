@@ -10,7 +10,18 @@
 
 #pragma once
 
+#include "JuceMaxiOsc.h"
+
 #define SAVE_FILE_ID "polypupPresets"
+
+/*
+// template
+#define _ID    ""
+#define _NAME  ""
+#define _LABEL ""
+#define _RANGE NormalisableRange<float>(0.0,1.0)
+#define _DEFAULT_VALUE 1.0
+ */
 
 #define ATTACK_ID    "attack"
 #define ATTACK_NAME  "attack"
@@ -38,7 +49,7 @@
 
 #define CUTOFF_ID    "cutoff"
 #define CUTOFF_NAME  "cutoff"
-#define CUTOFF_LABEL "ms"
+#define CUTOFF_LABEL ""
 #define CUTOFF_RANGE NormalisableRange<float>(10.0, 14000.0)
 #define CUTOFF_DEFAULT_VALUE 14000.0
 
@@ -53,3 +64,9 @@
 #define Q_LABEL ""
 #define Q_RANGE NormalisableRange<float>(1.0, 10.0)
 #define Q_DEFAULT_VALUE 5.0
+
+#define OSC_TYPE_ID    "osc_type"
+#define OSC_TYPE_NAME  "osc_type"
+#define OSC_TYPE_LABEL ""
+#define OSC_TYPE_RANGE NormalisableRange<float>(0, JuceMaxiOscType::Count - 1)
+#define OSC_TYPE_DEFAULT_VALUE 0

@@ -27,13 +27,16 @@ audioDeviceManager()
     parameters.createAndAddParameter(CUTOFF_ID, CUTOFF_NAME, CUTOFF_LABEL, CUTOFF_RANGE, CUTOFF_DEFAULT_VALUE, nullptr, nullptr);
     parameters.createAndAddParameter(Q_ID, Q_NAME, Q_LABEL, Q_RANGE, Q_DEFAULT_VALUE, nullptr, nullptr);
     
+    // osc
+    parameters.createAndAddParameter(OSC_TYPE_ID, OSC_TYPE_NAME, OSC_TYPE_LABEL, OSC_TYPE_RANGE, OSC_TYPE_DEFAULT_VALUE, nullptr, nullptr);
+    
     parameters.state = ValueTree(Identifier(SAVE_FILE_ID));
     
     // set up the synth
     auto numVoices = 8;
     for(auto i = 0; i < numVoices; ++i)
     {
-        synth.addVoice (new JuceMaxiOscVoice(JuceMaxiOscType::Saw, &attack, &decay, &sustain, &release, &holdTime, &filterCutoff, &filterQ, &filterEnvAmount));
+        synth.addVoice (new JuceMaxiOscVoice(&oscType, &attack, &decay, &sustain, &release, &holdTime, &filterCutoff, &filterQ, &filterEnvAmount));
     }
     synth.addSound(new JuceMaxiOscSound());
 }

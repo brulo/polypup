@@ -8,6 +8,7 @@ PolypupAudioProcessorEditor::PolypupAudioProcessorEditor(PolypupAudioProcessor& 
     valueTreeState(vts),
     presetManagerComponent(&p),
     audioDeviceSelectorComponent(processor.audioDeviceManager, 0, 0, 1, 2, true, false, false, false),
+    oscillatorComponent(valueTreeState, &processor.oscType, OSC_TYPE_ID),
     keyboardComponent(processor.keyboardState, MidiKeyboardComponent::Orientation::horizontalKeyboard),
     filterComponent(valueTreeState, &processor.filterCutoff, &processor.filterQ, &processor.filterEnvAmount, CUTOFF_ID, CUTOFF_ENVAMT_ID, Q_ID),
     adsrComponent(valueTreeState, &processor.attack, &processor.decay, &processor.sustain, &processor.release, &processor.holdTime, ATTACK_ID, DECAY_ID, SUSTAIN_ID, RELEASE_ID)
@@ -18,6 +19,7 @@ PolypupAudioProcessorEditor::PolypupAudioProcessorEditor(PolypupAudioProcessor& 
 
     addAndMakeVisible(presetManagerComponent);
     addAndMakeVisible(audioDeviceSelectorComponent);
+    addAndMakeVisible(oscillatorComponent);
     addAndMakeVisible(keyboardComponent);
     addAndMakeVisible(filterComponent);
     addAndMakeVisible(adsrComponent);
@@ -43,6 +45,9 @@ void PolypupAudioProcessorEditor::resized()
     
     auto row = boundsRect.removeFromTop(25);
     presetManagerComponent.setBounds(row);
+    
+    row = boundsRect.removeFromTop(25);
+    oscillatorComponent.setBounds(row);
 
     // audio device selector row
     //row = boundsRect.removeFromTop(300);

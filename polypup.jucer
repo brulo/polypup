@@ -45,6 +45,10 @@
       <FILE id="VSjLPw" name="FilterComponent.h" compile="0" resource="0"
             file="Source/FilterComponent.h"/>
       <FILE id="sSXeIa" name="JuceMaxiOsc.h" compile="0" resource="0" file="Source/JuceMaxiOsc.h"/>
+      <FILE id="qiYTvF" name="OscillatorComponent.cpp" compile="1" resource="0"
+            file="Source/OscillatorComponent.cpp"/>
+      <FILE id="SRQgVU" name="OscillatorComponent.h" compile="0" resource="0"
+            file="Source/OscillatorComponent.h"/>
       <FILE id="ro5D9o" name="PluginProcessor.cpp" compile="1" resource="0"
             file="Source/PluginProcessor.cpp"/>
       <FILE id="NepeeJ" name="PluginProcessor.h" compile="0" resource="0"

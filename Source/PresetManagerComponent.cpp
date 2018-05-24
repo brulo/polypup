@@ -1,5 +1,3 @@
-#pragma once
-
 #include "PresetManagerComponent.h"
 
 PresetManagerComponent::PresetManagerComponent(PolypupAudioProcessor* processor)

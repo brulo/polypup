@@ -5,11 +5,11 @@
 
 enum JuceMaxiOscType
 {
-    Tri,
-    Sin,
-    Saw,
-    Square,
-    //Noise,
+    Tri =    1,
+    Sin =    2,
+    Saw =    3,
+    Square = 4,
+    Count =  4
 };
 
 struct JuceMaxiOscSound : public SynthesiserSound
@@ -22,7 +22,7 @@ struct JuceMaxiOscSound : public SynthesiserSound
 
 struct JuceMaxiOscVoice : public SynthesiserVoice
 {
-    JuceMaxiOscVoice(JuceMaxiOscType oscType, double *attack, double *decay, double *sustain, double *release, long *holdTime,
+    JuceMaxiOscVoice(JuceMaxiOscType *oscType, double *attack, double *decay, double *sustain, double *release, long *holdTime,
                      double *filterCutoff, double *filterQ, double *envAmountCutoff)
     {
         m_oscType = oscType;
@@ -64,7 +64,7 @@ struct JuceMaxiOscVoice : public SynthesiserVoice
         while(--numSamples >= 0)
         {
             double currentSample;
-            switch(m_oscType)
+            switch(*m_oscType)
             {
                 case JuceMaxiOscType::Saw:
                     currentSample = (float)m_osc.saw(m_frequency);
@@ -112,10 +112,10 @@ private:
     double *m_filterQ;
     double *m_envAmountCutoff;
     long* m_holdTime;
+    JuceMaxiOscType* m_oscType;
     maxiOsc m_osc;
     maxiEnv m_env;
     maxiFilter m_filt;
-    JuceMaxiOscType m_oscType;
     double m_frequency;
     int m_trigger;
 };

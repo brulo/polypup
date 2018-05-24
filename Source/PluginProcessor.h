@@ -46,12 +46,16 @@ public:
     AudioProcessorValueTreeState parameters;
     AudioDeviceManager audioDeviceManager;
     
+    // osc params
+    JuceMaxiOscType oscType;
+    
     // envelope params
     double attack, decay, sustain, release;
     long holdTime;
     
     // filter params
     double filterCutoff, filterQ, filterEnvAmount;
+
     
 private:
     
